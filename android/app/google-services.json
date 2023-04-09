@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "54626434735",
+    "firebase_url": "https://arduino-ae46c-default-rtdb.firebaseio.com",
+    "project_id": "arduino-ae46c",
+    "storage_bucket": "arduino-ae46c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54626434735:android:518e4f066160e7e8a11e5a",
+        "android_client_info": {
+          "package_name": "com.example.codeshastra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54626434735-d2mfp8ci8sa5uvqeppbf4omfbu2tg946.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDITAmN8TsukrDxVtYJenKfDqTrtsvAEd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54626434735-d2mfp8ci8sa5uvqeppbf4omfbu2tg946.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
