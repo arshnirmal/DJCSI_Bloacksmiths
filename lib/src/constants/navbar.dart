@@ -14,7 +14,7 @@ class _NavBarState extends State<NavBar> {
 
   final List<Widget> _children = [
     const TriviaScreen(),
-    const LotteryGame()
+    const GamesPage(),
     // SearchScreen(),
     // LibraryScreen(flutter lottery slot machine game),
   ];

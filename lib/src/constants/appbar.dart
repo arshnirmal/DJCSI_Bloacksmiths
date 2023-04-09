@@ -6,6 +6,7 @@ class AppBarTop {
   static AppBar appBar(Widget title) {
     return AppBar(
       title: title,
+      backgroundColor: const Color(0xfff2eae2),
       actions: [
         StreamBuilder(
           stream: FirebaseFirestore.instance

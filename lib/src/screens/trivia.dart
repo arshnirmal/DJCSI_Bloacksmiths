@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codeshastra/src/constants/appbar.dart';
+import 'package:codeshastra/src/screens/triviaresult.dart';
 import 'package:csv/csv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -50,37 +52,94 @@ class _TriviaScreenState extends State<TriviaScreen> {
     }
     return SafeArea(
       child: Scaffold(
-        appBar: AppBarTop.appBar(const Text('Trivia')),
+        backgroundColor: const Color(0xfff2eae2),
+        appBar: index > -1 ? AppBarTop.appBar(const Text("")) : null,
         body: index == -1
             ? Container(
-                child: TextButton(
-                    onPressed: () async {
-                      DocumentSnapshot snap = await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .get();
-                      if (int.parse(snap['coffee_beans']) <= 10) {
-                        Fluttertoast.showToast(
-                            msg: 'Insufficient Coffee beans');
-                        return;
-                      }
-                      await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .update({
-                        'coffee_beans':
-                            (int.parse(snap['coffee_beans']) - 10).toString()
-                      });
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.1,
+                  left: MediaQuery.of(context).size.width * 0.1,
+                ),
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.6,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: const Color(0xffe2c2aa),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        'Now earn 15 Coffee Beans by just solving a trivia!',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      'assets/images/coffee-bean.svg',
+                      height: MediaQuery.of(context).size.height * 0.25,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        DocumentSnapshot snap = await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .get();
+                        if (int.parse(snap['coffee_beans']) <= 10) {
+                          Fluttertoast.showToast(
+                              msg: 'Insufficient Coffee beans');
+                          return;
+                        }
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({
+                          'coffee_beans':
+                              (int.parse(snap['coffee_beans']) - 10).toString()
+                        });
 
-                      setState(() {
-                        index = index + 1;
-                      });
-                    },
-                    child: const Text("Play")),
+                        setState(() {
+                          index = index + 1;
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xffab877d),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
+                        textStyle: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      child: const Text("Play Now",
+                          style: TextStyle(
+                            color: Colors.white,
+                          )),
+                    ),
+                    const Text(
+                      "Stake 10 Coffee Beans right now!",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               )
             : Center(
                 child: ListView(
                   children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                    ),
                     const Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(
@@ -157,8 +216,11 @@ class _TriviaScreenState extends State<TriviaScreen> {
                     const SizedBox(
                       height: 8,
                     ),
-                    SizedBox(
-                      width: 200,
+                    Container(
+                      height: 48,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 84,
+                      ),
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
@@ -179,6 +241,14 @@ class _TriviaScreenState extends State<TriviaScreen> {
                               _progress += 0.2;
                             });
                           }
+                          if (index > 5) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TriviaResult(),
+                              ),
+                            );
+                          }
                         },
                         child: const Text(
                           'Submit',
@@ -194,9 +264,5 @@ class _TriviaScreenState extends State<TriviaScreen> {
               ),
       ),
     );
-  }
-
-  int getScore() {
-    return score;
   }
 }

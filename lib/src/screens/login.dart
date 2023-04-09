@@ -63,10 +63,17 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
           children: <Widget>[
             _isLoading
                 ? const CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _handleGoogleSignIn,
-                    child: const Text('Sign in with Google'),
-                  ),
+                : Column(
+                    children: [
+                      Image.asset(
+                        "login.png",
+                      ),
+                      ElevatedButton(
+                        onPressed: _handleGoogleSignIn,
+                        child: const Text('Sign in with Google'),
+                      ),
+                    ],
+                  )
           ],
         ),
       ),
